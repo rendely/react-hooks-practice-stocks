@@ -7,8 +7,12 @@ function MainContainer() {
   const [stocks, setStocks] = useState([]);
   const [portfolio, setPortfolio] = useState([]);
   const [typeFilter, setTypeFilter] = useState('Tech');
+  const [sortType, setSortType] = useState('None');
 
-  const displayedStocks = stocks.filter(stock => stock.type.includes(typeFilter));
+  const displayedStocks = stocks
+    .filter(stock => stock.type.includes(typeFilter))
+    .sort(chooseSortFunction())
+    ;
 
   useEffect(getStocksData, []);
 
@@ -31,11 +35,31 @@ function MainContainer() {
      setTypeFilter(typeFilter);
   }
 
+  function handleSortType(sortType){
+     setSortType(sortType);
+  }
+
+  function chooseSortFunction(){
+    switch (sortType){
+      case "Alphabetically":
+        return ((a,b) => {
+          if (a.name > b.name ) return 1
+          else if (a.name < b.name) return -1
+          else return 0
+        })
+      case "Price":
+        return ((a,b) => a.price - b.price)
+      default: return undefined;
+    }
+  }
+
   return (
     <div>
       <SearchBar 
         typeFilter={typeFilter}
         onChangeTypeFilter={handleTypeFilter}
+        sortType={sortType}
+        onChangeSortType={handleSortType}
       />
       <div className="row">
         <div className="col-8">

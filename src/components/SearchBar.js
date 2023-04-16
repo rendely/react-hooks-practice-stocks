@@ -1,8 +1,11 @@
 import React from "react";
 
-function SearchBar({typeFilter, onChangeTypeFilter}) {
+function SearchBar({typeFilter, onChangeTypeFilter, sortType, onChangeSortType}) {
   function handleChangeTypeFilter(e){
     onChangeTypeFilter(e.target.value)
+  }
+  function handleChangeSortType(e){
+    onChangeSortType(e.target.value);
   }
   return (
     <div>
@@ -12,8 +15,8 @@ function SearchBar({typeFilter, onChangeTypeFilter}) {
           type="radio"
           value="Alphabetically"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={sortType === "Alphabetically" ? true : false}
+          onChange={handleChangeSortType}
         />
         Alphabetically
       </label>
@@ -22,8 +25,8 @@ function SearchBar({typeFilter, onChangeTypeFilter}) {
           type="radio"
           value="Price"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={sortType === "Price" ? true : false}
+          onChange={handleChangeSortType}
         />
         Price
       </label>

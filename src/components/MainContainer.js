@@ -19,7 +19,13 @@ function MainContainer() {
   function handleClickStock(id){
     const stock = stocks.find(stock => stock.id === id);
     setPortfolio([stock, ...portfolio]);
+    setStocks(stocks.filter(stock => stock.id !== id));
+  }
 
+  function handleClickPortfolio(id){
+    const stock = portfolio.find(stock => stock.id === id);
+    setPortfolio(portfolio.filter(stock => stock.id !== id));
+    setStocks([stock, ...stocks]);
   }
 
   return (
@@ -30,7 +36,7 @@ function MainContainer() {
           <StockContainer stocks={stocks} onClickStock={handleClickStock}/>
         </div>
         <div className="col-4">
-          <PortfolioContainer stocks={portfolio}/>
+          <PortfolioContainer stocks={portfolio} onClickPortfolio={handleClickPortfolio}/>
         </div>
       </div>
     </div>
